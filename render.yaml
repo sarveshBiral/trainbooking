@@ -68,24 +68,24 @@ services:
         fromService:
           type: web
           name: auth-service
-          property: url
+          property: host
       - key: NEXT_PUBLIC_USER_URL
         fromService:
           type: web
           name: user-service
-          property: url
+          property: host
       - key: NEXT_PUBLIC_TRAIN_URL
         fromService:
           type: web
           name: train-service
-          property: url
+          property: host
       - key: NEXT_PUBLIC_BOOKING_URL
         fromService:
           type: web
           name: booking-service
-          property: url
+          property: host
       - key: NEXT_PUBLIC_ADMIN_URL
         fromService:
           type: web
           name: admin-service
-          property: url
+          property: host
