@@ -1,0 +1,91 @@
+services:
+  # --- Backend Services ---
+  - type: web
+    name: auth-service
+    env: node
+    plan: free
+    rootDir: backend/auth-service
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: PORT
+        value: 10000
+
+  - type: web
+    name: user-service
+    env: node
+    plan: free
+    rootDir: backend/user-service
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: PORT
+        value: 10000
+
+  - type: web
+    name: train-service
+    env: node
+    plan: free
+    rootDir: backend/train-service
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: PORT
+        value: 10000
+
+  - type: web
+    name: booking-service
+    env: node
+    plan: free
+    rootDir: backend/booking-service
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: PORT
+        value: 10000
+
+  - type: web
+    name: admin-service
+    env: node
+    plan: free
+    rootDir: backend/admin-service
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: PORT
+        value: 10000
+
+  # --- Frontend ---
+  - type: web
+    name: trainbooking-frontend
+    env: node
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_AUTH_URL
+        fromService:
+          type: web
+          name: auth-service
+          property: url
+      - key: NEXT_PUBLIC_USER_URL
+        fromService:
+          type: web
+          name: user-service
+          property: url
+      - key: NEXT_PUBLIC_TRAIN_URL
+        fromService:
+          type: web
+          name: train-service
+          property: url
+      - key: NEXT_PUBLIC_BOOKING_URL
+        fromService:
+          type: web
+          name: booking-service
+          property: url
+      - key: NEXT_PUBLIC_ADMIN_URL
+        fromService:
+          type: web
+          name: admin-service
+          property: url

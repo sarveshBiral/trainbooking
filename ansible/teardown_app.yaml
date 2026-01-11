@@ -1,0 +1,17 @@
+---
+- name: Teardown Microservices
+  hosts: all
+  tasks:
+    - name: Delete Kubernetes Manifests
+      command: kubectl delete -f "{{ playbook_dir }}/../k8s/" --ignore-not-found=true
+      ignore_errors: yes
+
+    - name: Delete Namespace
+      command: kubectl delete namespace trainbooking --ignore-not-found=true
+      ignore_errors: yes
+
+    - name: Stop Docker Compose Services
+      command: docker-compose down
+      args:
+        chdir: "{{ playbook_dir }}/.."
+      ignore_errors: yes

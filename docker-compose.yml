@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  auth-service:
+    build: ./backend/auth-service
+    ports:
+      - "3001:3001"
+    networks:
+      - train-network
+
+  user-service:
+    build: ./backend/user-service
+    ports:
+      - "3002:3002"
+    networks:
+      - train-network
+
+  train-service:
+    build: ./backend/train-service
+    ports:
+      - "3003:3003"
+    networks:
+      - train-network
+
+  booking-service:
+    build: ./backend/booking-service
+    ports:
+      - "3004:3004"
+    networks:
+      - train-network
+
+  admin-service:
+    build: ./backend/admin-service
+    ports:
+      - "3005:3005"
+    networks:
+      - train-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - train-network
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3006:3000"
+    volumes:
+      - ./monitoring/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - train-network
+
+networks:
+  train-network:
+    driver: bridge

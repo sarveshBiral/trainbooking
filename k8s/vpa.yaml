@@ -1,0 +1,64 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: train-vpa
+  namespace: trainbooking
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind:       Deployment
+    name:       train-service
+  updatePolicy:
+    updateMode: "Auto"
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: auth-vpa
+  namespace: trainbooking
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind:       Deployment
+    name:       auth-service
+  updatePolicy:
+    updateMode: "Auto"
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: user-vpa
+  namespace: trainbooking
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind:       Deployment
+    name:       user-service
+  updatePolicy:
+    updateMode: "Auto"
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: booking-vpa
+  namespace: trainbooking
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind:       Deployment
+    name:       booking-service
+  updatePolicy:
+    updateMode: "Auto"
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: admin-vpa
+  namespace: trainbooking
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind:       Deployment
+    name:       admin-service
+  updatePolicy:
+    updateMode: "Auto"

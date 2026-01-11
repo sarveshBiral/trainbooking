@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-service
+  namespace: trainbooking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-service
+  template:
+    metadata:
+      labels:
+        app: admin-service
+    spec:
+      containers:
+      - name: admin-service
+        image: trainbooking-admin-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3005
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-service
+  namespace: trainbooking
+spec:
+  selector:
+    app: admin-service
+  ports:
+    - protocol: TCP
+      port: 3005
+      targetPort: 3005

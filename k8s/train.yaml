@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: train-service
+  namespace: trainbooking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: train-service
+  template:
+    metadata:
+      labels:
+        app: train-service
+    spec:
+      containers:
+      - name: train-service
+        image: trainbooking-train-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3003
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: train-service
+  namespace: trainbooking
+spec:
+  selector:
+    app: train-service
+  ports:
+    - protocol: TCP
+      port: 3003
+      targetPort: 3003

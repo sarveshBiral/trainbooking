@@ -1,0 +1,34 @@
+---
+- name: Setup Infrastructure (IaaS Simulation)
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update apt cache (Linux)
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Install Docker (Linux)
+      apt:
+        name: docker.io
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install Kubectl (Linux)
+      get_url:
+        url: https://storage.googleapis.com/kubernetes-release/release/v1.23.0/bin/linux/amd64/kubectl
+        dest: /usr/local/bin/kubectl
+        mode: '0755'
+      when: ansible_os_family == "Debian"
+
+    - name: Ensure Docker is running
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      when: ansible_os_family == "Debian"
+
+    - name: MacOS Placeholder (Informational)
+      debug:
+        msg: "On MacOS, Docker Desktop and Kubectl are usually installed manually or via Homebrew. Skipping Linux-specific tasks."
+      when: ansible_os_family == "Darwin"
