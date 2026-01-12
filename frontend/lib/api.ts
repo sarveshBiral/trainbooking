@@ -11,6 +11,9 @@ const TRAIN_URL = formatUrl(process.env.NEXT_PUBLIC_TRAIN_URL, 'http://localhost
 const BOOKING_URL = formatUrl(process.env.NEXT_PUBLIC_BOOKING_URL, 'http://localhost:3004');
 const ADMIN_URL = formatUrl(process.env.NEXT_PUBLIC_ADMIN_URL, 'http://localhost:3005');
 
+
+console.log('API URLs:', { AUTH_URL, USER_URL, TRAIN_URL, BOOKING_URL, ADMIN_URL });
+
 export const login = async (credentials: any) => {
     return axios.post(`${AUTH_URL}/auth/login`, credentials);
 };
