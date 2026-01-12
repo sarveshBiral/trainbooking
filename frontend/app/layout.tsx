@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import EnvSync from "../components/EnvSync";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +28,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <EnvSync env={{
+          NEXT_PUBLIC_AUTH_URL: process.env.NEXT_PUBLIC_AUTH_URL || '',
+          NEXT_PUBLIC_USER_URL: process.env.NEXT_PUBLIC_USER_URL || '',
+          NEXT_PUBLIC_TRAIN_URL: process.env.NEXT_PUBLIC_TRAIN_URL || '',
+          NEXT_PUBLIC_BOOKING_URL: process.env.NEXT_PUBLIC_BOOKING_URL || '',
+          NEXT_PUBLIC_ADMIN_URL: process.env.NEXT_PUBLIC_ADMIN_URL || '',
+        }} />
         {children}
       </body>
     </html>
