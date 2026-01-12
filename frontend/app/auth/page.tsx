@@ -54,6 +54,11 @@ export default function AuthPage() {
                 >
                     {isLogin ? 'Need an account? Register' : 'Have an account? Login'}
                 </button>
+
+                <div className="mt-4 p-2 bg-gray-200 text-xs text-black break-all">
+                    DEBUG: Auth URL is <br />
+                    {typeof window !== 'undefined' ? (window as any).__ENV?.NEXT_PUBLIC_AUTH_URL || 'Undefined' : 'SSR'}
+                </div>
             </div>
         </div>
     );
