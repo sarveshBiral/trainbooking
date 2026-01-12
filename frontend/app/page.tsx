@@ -7,14 +7,23 @@ export default function Home() {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [trains, setTrains] = useState<any[]>([]);
+  const [error, setError] = useState('');
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     try {
-      const res = await searchTrains(from, to);
+      console.log('Searching trains...');
+      const res = await searchTrains(from.trim(), to.trim());
+      console.log('Search result:', res.data);
       setTrains(res.data);
-    } catch (err) {
+      if (res.data.length === 0) {
+        setError('No trains found for this route.');
+      }
+    } catch (err: any) {
       console.error(err);
+      setError(err.message || 'Error searching trains');
+      alert('Search failed: ' + (err.message || 'Unknown error'));
     }
   };
 
@@ -46,7 +55,7 @@ export default function Home() {
       <main className="p-8 max-w-4xl mx-auto">
         <div className="bg-white p-6 rounded shadow mb-8">
           <h2 className="text-2xl font-bold mb-4">Find your Train</h2>
-          <form onSubmit={handleSearch} className="flex gap-4">
+          <form onSubmit={handleSearch} className="flex gap-4 mb-4">
             <input
               className="flex-1 border p-2 rounded"
               placeholder="From (e.g., New York)"
@@ -59,6 +68,12 @@ export default function Home() {
             />
             <button className="bg-blue-600 text-white px-6 py-2 rounded font-bold">Search</button>
           </form>
+
+          {error && <div className="p-3 bg-red-100 text-red-700 rounded mb-4">{error}</div>}
+
+          <div className="text-xs text-gray-500 bg-gray-100 p-2 rounded break-all">
+            DEBUG: Train URL: {typeof window !== 'undefined' ? (window as any).__ENV?.NEXT_PUBLIC_TRAIN_URL || 'Undefined' : 'SSR'}
+          </div>
         </div>
 
         <div className="space-y-4">
