@@ -10,7 +10,9 @@ const getEnv = (key: string, fallback: string) => {
 
 const formatUrl = (url?: string, fallback: string = '') => {
     if (!url) return fallback;
-    return url.startsWith('http') ? url : `https://${url}`;
+    if (url.startsWith('http')) return url;
+    if (url.includes('.')) return `https://${url}`;
+    return `https://${url}.onrender.com`;
 };
 
 const getAuthUrl = () => formatUrl(getEnv('NEXT_PUBLIC_AUTH_URL', 'http://localhost:3001'));
